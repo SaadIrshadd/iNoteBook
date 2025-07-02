@@ -29,9 +29,9 @@ const AddNotes = () => {
             <label htmlFor="description">Description</label>
             <input type="text" className="form-control" id="description" name="description" placeholder="Description" onChange={onChange} />
           </div>
-          <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-            <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+          <div className="mb-3">
+            <label htmlFor="tag">Tag</label>
+            <input type="text" className="form-control" id="tag" name="tag" placeholder="Tag" onChange={onChange} />
           </div>
           <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Notes</button>
         </form>

@@ -19,7 +19,6 @@ const getNotes = async() => {
       }
     );
     const json = await response.json()
-    console.log(json)
     setNotes(json)
   };
 
@@ -50,8 +49,19 @@ const getNotes = async() => {
   };
 
   //Delete Note
-  const deleteNote = (id) => {
-    console.log("deleted with " + id);
+  const deleteNote = async (id) => {
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1YjY3OGMxNDZiZDdkZGJkNjg5YWQyIn0sImlhdCI6MTc1MTA2ODMxMn0.semtRzpsobMYV6h_ObqXQT8nqrXHVf057DPANlPuCWs"
+        },
+      }  
+    );
+    const json = response.json();
+    console.log(json);
+    
     const newNote = notes.filter((note) => {
       return note._id !== id;
     });
