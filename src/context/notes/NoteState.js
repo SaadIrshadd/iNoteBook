@@ -74,7 +74,7 @@ const getNotes = async() => {
     //API CALL
     const response = await fetch(`${host}/api/notes/updatenote/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1YjY3OGMxNDZiZDdkZGJkNjg5YWQyIn0sImlhdCI6MTc1MTA2ODMxMn0.semtRzpsobMYV6h_ObqXQT8nqrXHVf057DPANlPuCWs"
@@ -82,17 +82,24 @@ const getNotes = async() => {
         body: JSON.stringify({title, description, tag}),
       }
     );
+    
+    const json = await response.json()
     console.log(response);
     
+    let newNotes = JSON.parse(JSON.stringify(notes))
+    
     //Logic to edit in client
-    for (let i = 0; i < notes.length; i++) {
-        const element = notes[i];
+    for (let i = 0; i < newNotes.length; i++) {
+        const element = newNotes[i];
+       
         if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        newNotes[i].title = title;
+        newNotes[i].description = description;
+        newNotes[i].tag = tag;
+        break;
         }
     }
+    setNotes(newNotes);
 }
     
     return(
