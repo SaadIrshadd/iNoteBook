@@ -62,6 +62,7 @@ router.post("/login",[
 ],
 async (req, res) => {
     //returing BAD REQUEST if there is an error
+    let success = false;
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
@@ -78,7 +79,8 @@ async (req, res) => {
 
       const passCompare = await bcrypt.compare(password, user.password);
       if (!passCompare) {
-        return res.status(400).json({ error: "Please try to login with correct credentials" });
+        success = false
+        return res.status(400).json({ success ,error: "Please try to login with correct credentials" });
       }
 
        const data = {
@@ -86,8 +88,9 @@ async (req, res) => {
                 id: user.id
             }
         }
+        success = true;
         const authToken = jwt.sign(data, JWT_SECRET);
-        res.json({authToken : authToken})
+        res.json({success, authToken : authToken})
     } 
     catch (error) {
       console.error(error.message);
