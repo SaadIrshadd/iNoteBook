@@ -2,7 +2,8 @@ import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [credentials, setCredentials] = useState({ email: '', password: '' });
+    
+    const [credentials, setCredentials] = useState({email: '', password: '' });
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -50,8 +51,7 @@ const Login = () => {
                 onChange={onChange}
                 placeholder="Enter your email"
                 required
-                />
-                <div id="emailHelp" className="form-text text-muted">We'll never share your email.</div>
+                />                
             </div>
             <div className="mb-3">
                 <label htmlFor="password" className="form-label fw-semibold">Password</label>
