@@ -35,17 +35,7 @@ const getNotes = async() => {
         body: JSON.stringify({title, description, tag}),
       }
     );
-    console.log(response)
-    
-    const note = {
-      _id: "68607e120f5df3b5e394d1abf9",
-      user: "685b678c146bd7ddbd689ad2",
-      title: title,
-      description: description,
-      tag: tag,
-      data: "2025-06-28T23:43:11.233Z",
-      __v: 0,
-    };
+    const note = await response.json()
     setNotes(notes.concat(note));
   };
 
@@ -60,8 +50,7 @@ const getNotes = async() => {
         },
       }  
     );
-    const json = response.json();
-    console.log(json);
+    const json = await response.json();
     
     const newNote = notes.filter((note) => {
       return note._id !== id;
@@ -84,7 +73,6 @@ const getNotes = async() => {
     );
     
     const json = await response.json()
-    console.log(response);
     
     let newNotes = JSON.parse(JSON.stringify(notes))
     

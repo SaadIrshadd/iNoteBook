@@ -52,29 +52,31 @@ const Notes = () => {
                 <form className="my-3">
                   <div className="mb-3">
                     <label htmlFor="title">Title</label>
-                    <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" placeholder="Title" onChange={onChange} />
+                    <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" placeholder="Title" onChange={onChange} minLength={5} required/>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="description">Description</label>
-                    <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" placeholder="Description" onChange={onChange} />
+                    <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" placeholder="Description" minLength={5} required onChange={onChange} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="tag">Tag</label>
-                    <input type="text" className="form-control" value={note.etag} id="etag" name="etag" placeholder="Tag" onChange={onChange} />
+                    <input type="text" className="form-control" value={note.etag} id="etag" name="etag" placeholder="Tag" onChange={onChange} required/>
                   </div>                  
                 </form>
               </div>
               <div className="modal-footer">
                 <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
+                <button disabled={note.etitle.length<5 || note.edescription.length<5} type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
               </div>
             </div>
           </div>
         </div>
         <div className="row my-3">
         
-            <h2>Your Notes</h2>
-        
+            <h2 className="text-center">Your Notes</h2>
+            <div className="container">
+              <h6>{notes.length === 0 && 'No notes to display'}</h6>
+            </div>
             {notes.map((note)=>{
             return <NoteItem key={note._id} updateNote={updateNote} note={note}/>
             })}
