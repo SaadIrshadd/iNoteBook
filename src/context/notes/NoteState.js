@@ -35,6 +35,7 @@ const getNotes = async() => {
         body: JSON.stringify({title, description, tag}),
       }
     );
+    console.log(response)
     
     const note = {
       _id: "68607e120f5df3b5e394d1abf9",
@@ -81,6 +82,7 @@ const getNotes = async() => {
         body: JSON.stringify({title, description, tag}),
       }
     );
+    console.log(response);
     
     //Logic to edit in client
     for (let i = 0; i < notes.length; i++) {
