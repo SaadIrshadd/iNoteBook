@@ -1,11 +1,20 @@
 import React from 'react';
 
 function Alert(props) {
-   return (
+  return (
     <div style={{ height: "50px" }}>
       {props.alert && (
-        <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
-          <strong> {props.alert.msg} </strong>
+        <div
+          className={`alert alert-${props.alert.type} alert-dismissible fade show`}
+          role="alert"
+          style={{
+            position: "fixed",
+            top: "0",
+            width: "100%",
+            borderRadius: "0"
+          }}
+        >
+          <strong>{props.alert.msg}</strong>
         </div>
       )}
     </div>

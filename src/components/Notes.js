@@ -2,19 +2,27 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from '../context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNotes from './AddNotes';
+import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
     const context = useContext(noteContext)
     const {notes, getNotes, editNote} = context;
     const ref = useRef(null)
     const refClose = useRef(null)
+    let navigate = useNavigate()
     const [note, setNote] = useState({id : "", etitle: "", edescription: "", etag: "" });
 
     useEffect(() => {
-      getNotes()
-      // eslint-disable-next-line
-    }, [])
-    
+      if(localStorage.getItem('token')){
+        getNotes()
+        // eslint-disable-next-line
+      }
+    else{
+      navigate('/login')
+    }
+    // eslint-disable-next-line
+    }, []
+  )
 
     const updateNote = (currentNote)=>{
       ref.current.click();
@@ -75,13 +83,16 @@ const Notes = (props) => {
         <div className="row my-3">
         
             <h2 className="text-center">Your Notes</h2>
-            <div className="container">
-              <h6>{notes.length === 0 && 'No notes to display'}</h6>
-            </div>
-            {notes.map((note)=>{
-            return <NoteItem key={note._id} ShowAlert={props.ShowAlert} updateNote={updateNote} note={note}/>
-            })}
-        
+            {Array.isArray(notes) && notes.length === 0 ? 
+              (<div className="container">
+                <h6>{'No notes to display'}</h6>
+              </div>)
+             : 
+              (Array.isArray(notes) &&
+              notes.map((note) => (
+                <NoteItem key={note._id} ShowAlert={props.ShowAlert} updateNote={updateNote} note={note} />
+              ))
+            )}
         </div>
     </>
   )

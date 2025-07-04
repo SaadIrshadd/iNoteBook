@@ -7,30 +7,32 @@ const Login = (props) => {
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
+    e.preventDefault();
+
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+        "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password,
-        }),
-        });
-        const json = await response.json();
-        console.log(json);
-        
-        if(json.success){
-            //Save the auth token and redirect
-            localStorage.setItem('token',json.authtoken);
-            navigate('/')
-            props.ShowAlert("Logeed in Successfully", "success")
-        }
-        else{
-            props.ShowAlert("Invalid Credentials", "danger")
-        }
+        email: credentials.email,
+        password: credentials.password
+        })
+    });
+
+    const json = await response.json();
+    console.log("LOGIN RESPONSE:", json); 
+
+    if (json.success) {
+        localStorage.setItem("token", json.authToken);
+        navigate("/");
+        props.ShowAlert("Logged in Successfully", "success")
+    } 
+    else {
+        props.ShowAlert("Invalid Credentials", "danger")
+    }
     };
+
 
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
