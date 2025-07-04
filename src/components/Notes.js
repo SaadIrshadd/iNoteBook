@@ -83,12 +83,12 @@ const Notes = (props) => {
         <div className="row my-3">
         
             <h2 className="text-center">Your Notes</h2>
-            {Array.isArray(notes) && notes.length === 0 ? 
+            {notes.length === 0 ? 
               (<div className="container">
                 <h6>{'No notes to display'}</h6>
               </div>)
              : 
-              (Array.isArray(notes) &&
+              (
               notes.map((note) => (
                 <NoteItem key={note._id} ShowAlert={props.ShowAlert} updateNote={updateNote} note={note} />
               ))
