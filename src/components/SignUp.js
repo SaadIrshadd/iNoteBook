@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
+const SignUp = (props) => {
 
   const [credentials, setCredentials] = useState({ name: '', email: '', password: '', cpassword: '' });
   let navigate = useNavigate();
@@ -12,7 +12,7 @@ const SignUp = () => {
     const { name, email, password, cpassword } = credentials;
 
     if (password !== cpassword) {
-      alert("Passwords do not match");
+      props.ShowAlert("Password do not match", "danger")
       return;
     }
 
@@ -27,8 +27,14 @@ const SignUp = () => {
     const json = await response.json();
     console.log(json);
 
-    localStorage.setItem('token', json.authtoken);
-    navigate('/');
+    if(json.success){
+      localStorage.setItem('token', json.authtoken);
+      navigate('/');
+      props.ShowAlert("Account Created Successfully", "success")
+    }
+    else{
+      props.ShowAlert("Invalid Details", "danger")
+    }
   };
 
   const onChange = (e) => {
@@ -50,7 +56,7 @@ const SignUp = () => {
               value={credentials.name}
               onChange={onChange}
               placeholder="Enter your name"
-              required
+             
             />
           </div>
           <div className="mb-3">
@@ -63,7 +69,7 @@ const SignUp = () => {
               value={credentials.email}
               onChange={onChange}
               placeholder="Enter your email"
-              required
+              
             />            
           </div>
           <div className="mb-3">
